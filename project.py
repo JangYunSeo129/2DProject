@@ -33,10 +33,19 @@ def player_run():
 def player_jump():
     clear_canvas_now()
     player_jump1.draw_now(400,300)
-    delay(0.2)
+    delay(0.06)
+    clear_canvas_now()
+    player_jump1.draw_now(400,310)
+    delay(0.06)
+    clear_canvas_now()
+    player_jump1.draw_now(400,320)
+    delay(0.06)
+    clear_canvas_now()
+    player_jump2.draw_now(400,310)
+    delay(0.06)
     clear_canvas_now()
     player_jump2.draw_now(400,300)
-    delay(0.12)
+    delay(0.02)
 
 for a in range(10):
     player_run()
