@@ -1,4 +1,5 @@
 from pico2d import *
+
 os.getcwd()
 os.chdir('c:\\Users\\user\\Desktop\\tcu\\2-2\\2DGP\\2DProject')
 open_canvas()
@@ -10,6 +11,7 @@ player_run5 = load_image('Asset1\\artwork\\Sprites\\player\\run\\player-run-5.pn
 player_run6 = load_image('Asset1\\artwork\\Sprites\\player\\run\\player-run-6.png')
 player_jump1 = load_image('Asset1\\artwork\\Sprites\\player\\jump\\player-jump-1.png')
 player_jump2 = load_image('Asset1\\artwork\\Sprites\\player\\jump\\player-jump-2.png')
+
 def player_run():
     clear_canvas_now()
     player_run1.draw_now(400,300)
