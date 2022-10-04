@@ -6,6 +6,7 @@ os.chdir('c:\\Users\\user\\Desktop\\tcu\\2-2\\2DGP\\2DProject')
 open_canvas(1920, 1080)
 back_ground = load_image('background.png')
 player_sheet = load_image('player_sheet.png')
+enemy1_sheet = load_image('enemy1_sheet.png')
 
 x, y = 400, 300
 def player_run(x, y):
@@ -57,27 +58,25 @@ def player_down(x, y):
         clear_canvas()
     return y
 
-for i in range(5):
-    player_run(x, y)
+def frog():
+    enemy1_sheet.clip_draw(0, 32 , 33, 32, 1920, 300, 264, 256)
+    update_canvas()
+    delay(1)
+    clear_canvas()
+    enemy1_sheet.clip_draw(0, 32 , 33, 32, 1860, 450, 264, 256)
+    update_canvas()
+    delay(1)
+    clear_canvas()
+    enemy1_sheet.clip_draw(0, 32 , 33, 32, 1800, 600, 264, 256)
+    update_canvas()
+    delay(1)
+    clear_canvas()
+    enemy1_sheet.clip_draw(33, 32 , 33, 32, 1740, 500, 264, 256)
+    update_canvas()
+    delay(1)
 
+frog()
 y = player_jump(x, y)
-
-for i in range(5):
-    player_run(x, y)
-
-y = player_down(x, y)
-
-for i in range(5):
-    player_run(x, y)
-
-x = player_moveR(x, y)
-
-for i in range(5):
-    player_run(x, y)
-
-x = player_moveL(x, y)
-
-for i in range(5):
-    player_run(x, y)
+player_run(x, y)
 
 close_canvas()
