@@ -1,12 +1,13 @@
-from turtle import back, clear, up
 from pico2d import *
+import os
 
 os.getcwd()
 os.chdir('c:\\Users\\user\\Desktop\\tcu\\2-2\\2DGP\\2DProject')
-open_canvas(1920, 1080)
-back_ground = load_image('background.png')
+back_ground = pico2d.load_image('background.png')
 player_sheet = load_image('player_sheet.png')
 enemy1_sheet = load_image('enemy1_sheet.png')
+
+open_canvas(1920, 1080)
 
 x, y = 400, 300
 def player_run(x, y):
@@ -58,24 +59,6 @@ def player_down(x, y):
         clear_canvas()
     return y
 
-def frog():
-    enemy1_sheet.clip_draw(0, 32 , 33, 32, 1920, 300, 264, 256)
-    update_canvas()
-    delay(1)
-    clear_canvas()
-    enemy1_sheet.clip_draw(0, 32 , 33, 32, 1860, 450, 264, 256)
-    update_canvas()
-    delay(1)
-    clear_canvas()
-    enemy1_sheet.clip_draw(0, 32 , 33, 32, 1800, 600, 264, 256)
-    update_canvas()
-    delay(1)
-    clear_canvas()
-    enemy1_sheet.clip_draw(33, 32 , 33, 32, 1740, 500, 264, 256)
-    update_canvas()
-    delay(1)
-
-frog()
 y = player_jump(x, y)
 player_run(x, y)
 
