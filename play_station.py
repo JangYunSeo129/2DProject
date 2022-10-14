@@ -5,6 +5,8 @@ os.chdir('c:\\Users\\user\\Desktop\\tcu\\2-2\\2DGP\\2DProject')
 class Fox:
     def __init__(self):
         self.drawaction = 0
+        self.row = 1
+        self.col = 1
         self.frame = 0
         self.image = load_image('player_sheet.png')
 
@@ -17,42 +19,66 @@ class Fox:
             self.image.clip_draw(self.frame * 33, 32, 33, 32, x, y, 264, 256)
         else:
             if userinput == 1:
-                self.image.clip_draw(self.frame * 33, 32, 33, 32, x, y, 264, 256)
-                x = x + 35
-                self.drawaction = self.drawaction + 1
-                if self.drawaction == 6:
-                    self.drawaction = 0
+                if self.row == 4:
+                    self.image.clip_draw(self.frame * 33, 32, 33, 32, x, y, 264, 256)
                     userinput = 0
-            elif userinput == 2:
-                self.image.clip_draw(self.frame * 33, 32, 33, 32, x, y, 264, 256)
-                x = x - 35
-                self.drawaction = self.drawaction + 1
-                if self.drawaction == 6:
-                    self.drawaction = 0
-                    userinput = 0
-            elif userinput == 3:
-                if self.drawaction < 5:
-                    y = y + 71
-                    self.image.clip_draw(0, 0, 33, 32, x, y, 264, 256)
-                    self.drawaction = self.drawaction + 1
-                elif self.drawaction < 8:
-                    self.image.clip_draw(33, 0, 32, 32, x, y, 264, 256)
-                    y = y - 33
-                    self.drawaction = self.drawaction + 1
                 else:
-                    self.image.clip_draw(33, 0, 32, 32, x, y, 264, 256)
-                    self.drawaction = 0
+                    self.image.clip_draw(self.frame * 33, 32, 33, 32, x, y, 264, 256)
+                    x = x + 35
+                    self.drawaction = self.drawaction + 1
+                    if self.drawaction == 6:
+                        self.row = self.row + 1
+                        self.drawaction = 0
+                        userinput = 0
+            elif userinput == 2:
+                if self.row == 1:
+                    self.image.clip_draw(self.frame * 33, 32, 33, 32, x, y, 264, 256)
                     userinput = 0
-                    self.frame = 0
+                else:
+                    self.image.clip_draw(self.frame * 33, 32, 33, 32, x, y, 264, 256)
+                    x = x - 35
+                    self.drawaction = self.drawaction + 1
+                    if self.drawaction == 6:
+                        self.row = self.row - 1
+                        self.drawaction = 0
+                        userinput = 0
+            elif userinput == 3:
+                if self.col == 3:
+                    self.image.clip_draw(self.frame * 33, 32, 33, 32, x, y, 264, 256)
+                    userinput = 0
+                else:
+                    if self.drawaction < 5:
+                        y = y + 71
+                        self.image.clip_draw(0, 0, 33, 32, x, y, 264, 256)
+                        self.drawaction = self.drawaction + 1
+                    elif self.drawaction < 8:
+                        self.image.clip_draw(33, 0, 32, 32, x, y, 264, 256)
+                        y = y - 33
+                        self.drawaction = self.drawaction + 1
+                    else:
+                        self.image.clip_draw(33, 0, 32, 32, x, y, 264, 256)
+                        self.col = self.col + 1
+                        self.drawaction = 0
+                        userinput = 0
+                        self.frame = 0
             elif userinput == 4:
-                self.image.clip_draw(33, 0, 33, 32, x, y, 264, 256)
-                y = y - 32
-                self.drawaction = self.drawaction + 1
-                if self.drawaction == 8:
-                    self.drawaction = 0
+                if self.col == 1:
+                    self.image.clip_draw(self.frame * 33, 32, 33, 32, x, y, 264, 256)
                     userinput = 0
-                    self.frame = 0
+                else:
+                    self.image.clip_draw(33, 0, 33, 32, x, y, 264, 256)
+                    y = y - 32
+                    self.drawaction = self.drawaction + 1
+                    if self.drawaction == 8:
+                        self.col = self.col - 1
+                        self.drawaction = 0
+                        userinput = 0
+                        self.frame = 0
             
+class Background:
+    def __init__(self):
+        self.frame = 0
+        self.image = load_image('background.png')
 
 def handle_events():
     global running, userinput
@@ -72,7 +98,7 @@ def handle_events():
                 elif event.key == SDLK_DOWN:
                     userinput = 4
                 elif event.key == SDLK_ESCAPE:
-                    running == False
+                    running = False
 
 open_canvas(1920, 1080)
 x, y = 400, 300
