@@ -6,8 +6,7 @@ os.chdir('c:\\Users\\user\\Desktop\\tcu\\2-2\\2DGP\\2DProject')
 class Fox:
     def __init__(self):
         self.drawaction = 0
-        self.row = 1
-        self.col = 1
+        self.row, self.col = 1, 1
         self.frame = 0
         self.image = load_image('player_sheet.png')
 
@@ -99,8 +98,24 @@ class Gem:
 
 class Frog:
     def __init__(self):
+        self.x, self.y = 2100, 262 #등장 조건 바꿔야함
+        self.spawn = 0
         self.frame = 0
         self.image = load_image('enemy1_sheet.png')
+
+    def update(self):
+        self.frame = (self.frame + 1) % 12
+
+    def draw(self):
+        if userinput == 2:   #등장 조건 바꿔야함
+            self.spawn = 1
+        if self.spawn == 1:
+            # if rand 1,2 1뛰기 2안뛰기
+            self.image.clip_draw(((self.frame // 3)* 35) + 70, 32, 35, 32, self.x, self.y, 264, 256)
+            self.x = self.x - 40
+            if self.x < 0:
+                self.x = 2100
+                self.spawn = 0
 
 class Eagle:
     def __init__(self):
@@ -149,6 +164,7 @@ drawaction = 0
 fox = Fox()
 background = Background()
 eagle = Eagle()
+frog = Frog()
 running = True
         
 while running:
@@ -156,11 +172,13 @@ while running:
 
     background.update()
     eagle.update()
+    frog.update()
     fox.update()
 
     clear_canvas()
     background.draw()
     eagle.draw()
+    frog.draw()
     fox.draw()
     update_canvas()
 
