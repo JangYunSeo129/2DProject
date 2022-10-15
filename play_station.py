@@ -80,6 +80,32 @@ class Background:
         self.frame = 0
         self.image = load_image('background.png')
 
+    def update(self):
+        self.frame = (self.frame + 1) % 77
+
+    def draw(self):
+        self.image.clip_draw(self.frame * 5, 0, 240, 240, 960, 540, 1920, 1080)
+
+class Cherry:
+    def __init__(self):
+        self.frame = 0
+        self.image = load_image('item1.png')
+
+class Gem:
+    def __init__(self):
+        self.frame = 0
+        self.image = load_image('item2.png')
+
+class Frog:
+    def __init__(self):
+        self.frame = 0
+        self.image = load_image('enemy1_sheet.png')
+
+class Eagle:
+    def __init__(self):
+        self.frame = 0
+        self.image = load_image('enemy2_sheet.png')
+
 def handle_events():
     global running, userinput
     global x, y
@@ -105,15 +131,19 @@ x, y = 400, 300
 userinput = 0
 drawaction = 0
 fox = Fox()
+background = Background()
 running = True
         
 while running:
     handle_events()
 
+    background.update()
     fox.update()
 
     clear_canvas()
+    background.draw()
     fox.draw()
     update_canvas()
 
     delay(0.06)
+    
