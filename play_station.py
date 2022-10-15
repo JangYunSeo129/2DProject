@@ -1,5 +1,6 @@
 from pico2d import *
 import os
+import random
 os.chdir('c:\\Users\\user\\Desktop\\tcu\\2-2\\2DGP\\2DProject')
 
 class Fox:
@@ -103,8 +104,23 @@ class Frog:
 
 class Eagle:
     def __init__(self):
+        self.x, self.y = 2100, 812
+        self.spawn = 0
         self.frame = 0
         self.image = load_image('enemy2_sheet.png')
+
+    def update(self):
+        self.frame = (self.frame + 1) % 4
+
+    def draw(self):
+        if userinput == 1:   #등장 조건 바꿔야함
+            self.spawn = 1
+        if self.spawn == 1:
+            self.image.clip_draw(self.frame * 40, 0, 40, 41, self.x, self.y, 264, 256)
+            self.x = self.x - 40
+            if self.x < 0:
+                self.x = 2100
+                self.spawn = 0
 
 def handle_events():
     global running, userinput
@@ -132,18 +148,20 @@ userinput = 0
 drawaction = 0
 fox = Fox()
 background = Background()
+eagle = Eagle()
 running = True
         
 while running:
     handle_events()
 
     background.update()
+    eagle.update()
     fox.update()
 
     clear_canvas()
     background.draw()
+    eagle.draw()
     fox.draw()
     update_canvas()
 
     delay(0.06)
-    
