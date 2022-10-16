@@ -98,7 +98,7 @@ class Gem:
 
 class Frog:
     def __init__(self):
-        self.x, self.y = 2100, 262 #등장 조건 바꿔야함
+        self.x, self.y = 2100, 262 
         self.spawn = 0
         self.frame = 0
         self.image = load_image('enemy1_sheet.png')
@@ -110,7 +110,7 @@ class Frog:
         if userinput == 2:   #등장 조건 바꿔야함
             self.spawn = 1
         if self.spawn == 1:
-            # if rand 1,2 1뛰기 2안뛰기
+            # if rand 1,2 1뛰기 2안뛰기 FRAME //3도 바꿔줄수있으면 바꾸자
             self.image.clip_draw(((self.frame // 3)* 35) + 70, 32, 35, 32, self.x, self.y, 264, 256)
             self.x = self.x - 40
             if self.x < 0:
