@@ -174,7 +174,7 @@ class Frog:
         if self.spawn == 1:
             # if rand 1,2 1뛰기 2안뛰기 FRAME //3도 바꿔줄수있으면 바꾸자
             self.image.clip_draw(((self.frame // 3)* 35) + 70, 32, 35, 32, self.x, self.y, 264, 256)
-            self.x = self.x - 40
+            self.x = self.x - 30
             if self.x < 0:
                 self.x = 2100
                 self.spawn = 0
@@ -196,7 +196,7 @@ class Eagle:
             spawnmob = 0
         if self.spawn == 1:
             self.image.clip_draw(self.frame * 40, 0, 40, 41, self.x, self.y, 264, 256)
-            self.x = self.x - 40
+            self.x = self.x - 45
             if self.x < 0:
                 self.x = 2100
                 self.spawn = 0
@@ -229,6 +229,24 @@ def handle_events():
                 elif event.key == SDLK_ESCAPE:
                     running = False
 
+
+def update():
+    background.update()
+    cherry.update()
+    gem.update()
+    eagle.update()
+    frog.update()
+    fox.update()
+
+
+def draw():
+    background.draw()
+    cherry.draw()
+    gem.draw()
+    eagle.draw()
+    frog.draw()
+    fox.draw()
+
 open_canvas(1920, 1080)
 foxx, foxy = 400, 300
 userinput = 0
@@ -241,24 +259,15 @@ gem = Gem()
 eagle = Eagle()
 frog = Frog()
 running = True
+
         
 while running:
     handle_events()
 
-    background.update()
-    cherry.update()
-    gem.update()
-    eagle.update()
-    frog.update()
-    fox.update()
+    update()
 
     clear_canvas()
-    background.draw()
-    cherry.draw()
-    gem.draw()
-    eagle.draw()
-    frog.draw()
-    fox.draw()
+    draw()
     update_canvas()
 
-    delay(0.06)
+    delay(0.05)
