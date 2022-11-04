@@ -76,11 +76,22 @@ class Fox:
                         self.drawaction = 0
                         userinput = 0
                         self.frame = 0
-            
+
+
+class Platform():
+    def __init__(self):
+        self.image = load_image('platform.png')
+    
+    def draw(self, x):
+        if x == 1:
+            self.image.clip_draw(0, 0, 128, 16, 705, 400, 840, 64)
+        elif x == 2:
+            self.image.clip_draw(0, 0, 128, 16, 705, 655, 840, 64)
+
 class Background:
     def __init__(self):
         self.frame = 0
-        self.image = load_image('background.png')
+        self.image = load_image('backplus.png')
 
     def update(self):
         self.frame = (self.frame + 1) % 77
@@ -114,11 +125,11 @@ class Cherry:
                 elif randx == 4:
                     self.x = 1030
                 if randy ==  1:
-                    self.y = 300
+                    self.y = 280
                 elif randy == 2:
-                    self.y = 556
+                    self.y = 536
                 elif randy == 3:
-                    self.y = 812
+                    self.y = 792
         if self.spawn == 1:
             self.image.clip_draw(self.frame * 21, 0, 21, 21, self.x, self.y, 168, 168)
 
@@ -148,11 +159,11 @@ class Gem:
                 elif randx == 4:
                     self.x = 1030
                 if randy ==  1:
-                    self.y = 300
+                    self.y = 280
                 elif randy == 2:
-                    self.y = 556
+                    self.y = 536
                 elif randy == 3:
-                    self.y = 812
+                    self.y = 792
         if self.spawn == 1:
             self.image.clip_draw(self.frame * 15, 0, 15, 13, self.x, self.y, 120, 104)
 
@@ -241,6 +252,8 @@ def update():
 
 def draw():
     background.draw()
+    platform1.draw(1)
+    platform2.draw(2)
     cherry.draw()
     gem.draw()
     eagle.draw()
@@ -254,6 +267,8 @@ spawnmob = 0
 drawaction = 0
 fox = Fox()
 background = Background()
+platform1 = Platform()
+platform2 = Platform()
 cherry = Cherry()
 gem = Gem()
 eagle = Eagle()
