@@ -155,8 +155,8 @@ class Gem:
             self.effectdraw = 0
             print(userscore)
 
-        if self.effectdraw < 4:
-            self.effect.clip_draw(self.frame * 32, 0, 32, 32, self.ex, self.ey, 192, 192)
+        if self.effectdraw < 8:
+            self.effect.clip_draw((self.effectdraw//2) * 32, 0, 32, 32, self.ex, self.ey, 192, 192)
             self.effectdraw += 1   
 
         if self.row ==  1:
@@ -242,8 +242,6 @@ def handle_events():
                     spawnmob = 1
                 elif event.key == SDLK_w:
                     spawnmob = 2
-                elif event.key == SDLK_e:
-                    spawnmob = 3
                 elif event.key == SDLK_r:
                     spawnmob = 4
                 elif event.key == SDLK_ESCAPE:
