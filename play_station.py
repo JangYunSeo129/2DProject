@@ -140,6 +140,8 @@ class Gem:
         self.row, self.col = random.randint(1, 4), random.randint(1, 3)
         self.frame = 0
         self.image = load_image('item2_sheet.png')
+        self.effect = load_image('item_effect.png')
+        self.effectdraw, self.ex, self.ey = 0, 0, 0
 
     def update(self):
         self.frame = (self.frame + 1) % 5
@@ -147,9 +149,15 @@ class Gem:
     def draw(self):
         global userscore
         if foxrow == self.row and foxcol == self.col:
+            self.ex, self.ey = self.x, self.y
             self.row, self.col = random.randint(1, 4), random.randint(1, 3)
             userscore += 1
+            self.effectdraw = 0
             print(userscore)
+
+        if self.effectdraw < 4:
+            self.effect.clip_draw(self.frame * 32, 0, 32, 32, self.ex, self.ey, 192, 192)
+            self.effectdraw += 1   
 
         if self.row ==  1:
                 self.x = 400
@@ -256,10 +264,10 @@ def draw():
     platform1.draw(1)
     platform2.draw(2)
     cherry.draw()
-    gem.draw()
     eagle.draw()
     frog.draw()
     fox.draw()
+    gem.draw()
 
 open_canvas(1920, 1080)
 foxx, foxy = 400, 300
