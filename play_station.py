@@ -182,12 +182,14 @@ class Frog:
         self.spawn = 0
         self.frame = 0
         self.image = load_image('enemy1_sheet.png')
+        self.effect = load_image('enemy_effect.png')
+        self.effectdraw, self.ex, self.ey = 0, 0, 0
 
     def update(self):
         self.frame = (self.frame + 1) % 12
 
     def draw(self):
-        global spawnmob
+        global spawnmob, foxhit
         if spawnmob == 1:   #등장 조건 바꿔야함
             self.spawn = 1
             spawnmob = 0
@@ -198,6 +200,23 @@ class Frog:
             if self.x < 0:
                 self.x = 2100
                 self.spawn = 0
+        if foxcol == 1:
+            if foxx - self.x < 0:
+                if self.x - foxx < 132:
+                    foxhit += 1
+                    self.ex, self.ey = self.x, self.y
+                    self.effectdraw = 0
+                    self.x = 2100
+                    self.spawn = 0
+            elif foxx - self.x < 132:
+                foxhit += 1
+                self.ex, self.ey = self.x, self.y
+                self.effectdraw = 0
+                self.x = 2100
+                self.spawn = 0
+        if self.effectdraw < 12:
+            self.effect.clip_draw((self.effectdraw//2) * 40, 0, 40, 41, self.ex, self.ey, 192, 192)
+            self.effectdraw += 1
 
 class Eagle:
     def __init__(self):
@@ -205,12 +224,14 @@ class Eagle:
         self.spawn = 0
         self.frame = 0
         self.image = load_image('enemy2_sheet.png')
+        self.effect = load_image('enemy_effect.png')
+        self.effectdraw, self.ex, self.ey = 0, 0, 0
 
     def update(self):
         self.frame = (self.frame + 1) % 4
 
     def draw(self):
-        global spawnmob
+        global spawnmob, foxhit
         if spawnmob == 2:   #등장 조건 바꿔야함
             self.spawn = 1
             spawnmob = 0
@@ -220,6 +241,40 @@ class Eagle:
             if self.x < 0:
                 self.x = 2100
                 self.spawn = 0
+        if foxcol == 3:
+            if foxx - self.x < 0:
+                if self.x - foxx < 80:
+                    foxhit += 1
+                    self.ex, self.ey = self.x, self.y
+                    self.effectdraw = 0
+                    self.x = 2100
+                    self.spawn = 0
+            elif foxx - self.x < 180:
+                foxhit += 1
+                self.ex, self.ey = self.x, self.y
+                self.effectdraw = 0
+                self.x = 2100
+                self.spawn = 0
+        if self.effectdraw < 12:
+            self.effect.clip_draw((self.effectdraw//2) * 40, 0, 40, 41, self.ex, self.ey, 192, 192)
+            self.effectdraw += 1
+
+class Boss:
+    def __init__(self):
+        self.spawn = 0
+        self.frame = 0
+        self.image = load_image('enemy1_sheet.png')
+
+    def update(self):
+        self.frame = (self.frame + 1) % 12
+
+    def draw(self):
+        global spawnmob
+        if spawnmob == 3:   #등장 조건 바꿔야함
+            self.spawn = 1
+            spawnmob = 0
+        if self.spawn == 1:
+            self.image.clip_draw((self.frame//2 * 36), 0, 36, 32, 1750, 410, 1080, 960)
 
 def handle_events():
     global running, userinput, spawnmob
@@ -242,6 +297,8 @@ def handle_events():
                     spawnmob = 1
                 elif event.key == SDLK_w:
                     spawnmob = 2
+                elif event.key == SDLK_e:
+                    spawnmob = 3
                 elif event.key == SDLK_r:
                     spawnmob = 4
                 elif event.key == SDLK_ESCAPE:
@@ -254,6 +311,7 @@ def update():
     gem.update()
     eagle.update()
     frog.update()
+    boss1.update()
     fox.update()
 
 
@@ -261,18 +319,20 @@ def draw():
     background.draw()
     platform1.draw(1)
     platform2.draw(2)
+    fox.draw()
     cherry.draw()
     eagle.draw()
     frog.draw()
-    fox.draw()
+    boss1.draw()
     gem.draw()
 
 open_canvas(1920, 1080)
 foxx, foxy = 400, 300
 foxrow, foxcol = 1, 1
-userinput = 0
-spawnmob = 0
-userscore = 0
+foxhit = 0                 #체력관련사용변수 (frog, eagle에서사용중)
+userinput = 0            
+spawnmob = 0  
+userscore = 0              #점수관련사용변수 (gem에서사용중)
 fox = Fox()
 background = Background()
 platform1 = Platform()
@@ -281,6 +341,7 @@ cherry = Cherry()
 gem = Gem()
 eagle = Eagle()
 frog = Frog()
+boss1 = Boss()
 running = True
 
         
