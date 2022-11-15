@@ -200,7 +200,10 @@ class Frog:
             if self.x < 0:
                 self.x = 2100
                 self.spawn = 0
-        if foxcol == 1:
+
+        if foxy > self.y + 128:
+            pass
+        else:
             if foxx - self.x < 0:
                 if self.x - foxx < 132:
                     foxhit += 1
@@ -241,15 +244,18 @@ class Eagle:
             if self.x < 0:
                 self.x = 2100
                 self.spawn = 0
-        if foxcol == 3:
+
+        if foxy < self.y - 132:
+            pass
+        else:
             if foxx - self.x < 0:
-                if self.x - foxx < 80:
+                if self.x - foxx < 132:
                     foxhit += 1
                     self.ex, self.ey = self.x, self.y
                     self.effectdraw = 0
                     self.x = 2100
                     self.spawn = 0
-            elif foxx - self.x < 180:
+            elif foxx - self.x < 132:
                 foxhit += 1
                 self.ex, self.ey = self.x, self.y
                 self.effectdraw = 0
@@ -263,6 +269,7 @@ class Boss:
     def __init__(self):
         self.spawn = 0
         self.frame = 0
+        self.x, self.y = 2400, 330
         self.image = load_image('enemy1_sheet.png')
 
     def update(self):
@@ -274,7 +281,10 @@ class Boss:
             self.spawn = 1
             spawnmob = 0
         if self.spawn == 1:
-            self.image.clip_draw((self.frame//2 * 36), 0, 36, 32, 1750, 410, 1080, 960)
+            self.image.clip_composite_draw((self.frame//2 * 36), 0, 36, 32, 0, 'h', self.x, self.y, 720, 640)
+            if self.x > 1550:
+                self.x = self.x - 25
+            
 
 def handle_events():
     global running, userinput, spawnmob
