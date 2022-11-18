@@ -9,6 +9,7 @@ class Fox:
     def __init__(self):
         self.drawaction = 0
         self.frame = 0
+        self.x, self.y = 0, 0
         self.image = load_image('player_sheet.png')
 
     def update(self):
@@ -17,6 +18,12 @@ class Fox:
     def draw(self):
         global foxrow, foxcol
         global userinput, foxx, foxy
+        if foxhealth == 0:
+            if self.x == 0:
+                self.x, self.y = foxx, foxy
+            foxx, foxy = -10000, -10000
+            self.image.clip_draw(66, 0, 33, 32, self.x, self.y, 264, 256)
+        
         if userinput == 0:
             self.image.clip_draw(self.frame * 33, 32, 33, 32, foxx, foxy, 264, 256)
         else:
@@ -77,6 +84,7 @@ class Fox:
                         userinput = 0
                         self.frame = 0
 
+
 class Heart():
     def __init__(self):
         self.image = load_image('ui_heart.png')
@@ -129,7 +137,6 @@ class Cherry:
     def draw(self):
         global userscore, foxhealth
         self.spawn += 1
-        print(self.spawn)
         if self.spawn == 400:
             self.row, self.col = random.randint(1, 4), random.randint(1, 3)
             self.spawn = 0
