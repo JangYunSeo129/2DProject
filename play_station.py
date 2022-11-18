@@ -98,7 +98,10 @@ class Heart():
             self.image.clip_draw(0, 16, 16, 16, 220, 1000, 240, 240)
         else:
             self.image.clip_draw(16, 16, 16, 16, 220, 1000, 240, 240)
-        self.image.clip_draw(0, 16, 16, 16, 90, 1000, 240, 240)
+        if foxhealth == 0:
+            self.image.clip_draw(16, 16, 16, 16, 90, 1000, 240, 240)
+        else:
+            self.image.clip_draw(0, 16, 16, 16, 90, 1000, 240, 240)
 
 class Platform():
     def __init__(self):
@@ -116,7 +119,8 @@ class Background:
         self.image = load_image('backplus.png')
 
     def update(self):
-        self.frame = (self.frame + 1) % 77
+        if foxhealth > 0:
+            self.frame = (self.frame + 1) % 77
 
     def draw(self):
         self.image.clip_draw(self.frame * 5, 0, 240, 240, 960, 540, 1920, 1080)
@@ -353,6 +357,7 @@ def handle_events():
 
 
 open_canvas(1920, 1080)
+hide_cursor()
 foxx, foxy = 400, 300
 foxrow, foxcol = 1, 1
 foxhealth = 3                 #체력관련사용변수 (frog, eagle에서사용중)
