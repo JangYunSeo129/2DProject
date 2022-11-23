@@ -1,14 +1,6 @@
 from pico2d import *
 from objects import *
 
-foxx, foxy = 400, 300
-foxrow, foxcol = 1, 1
-foxhealth = 3                 #체력관련사용변수 (frog, eagle에서사용중)
-userinput = 0            
-spawnmob = 0  
-userscore = 0              #점수관련사용변수 (gem에서사용중)
-
-#-------------------------------------------------------------------
 fox = None
 heart = None
 background = None
@@ -19,15 +11,16 @@ gem = None
 eagle = None
 frog = None
 boss1 = None
-running = True
+running = None
 
 def enter():
     global fox, heart, background, under_platform, over_platform, cherry, gem, eagle, frog, boss1, running
+    
     fox = Fox()
     heart = Heart()
     background = Background()
-    under_platform = Platform(1)
-    over_platform = Platform(2)
+    under_platform = Platform()
+    over_platform = Platform()
     cherry = Cherry()
     gem = Gem()
     eagle = Eagle()

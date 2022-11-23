@@ -5,6 +5,7 @@ import os
 import random
 os.chdir('c:\\Users\\user\\Desktop\\tcu\\2-2\\2DGP\\2DProject')
 
+
 class Fox:
     def __init__(self):
         self.drawaction = 0
@@ -103,7 +104,7 @@ class Heart():
         else:
             self.image.clip_draw(0, 16, 16, 16, 90, 1000, 240, 240)
 
-class Platform():
+class Platform:
     def __init__(self):
         self.image = load_image('platform.png')
     
@@ -329,7 +330,6 @@ class Boss:
 
 def handle_events():
     global running, userinput, spawnmob
-    global x, y
     events = get_events()
     for event in events:
         if userinput == 0:
@@ -354,3 +354,11 @@ def handle_events():
                     spawnmob = 4
                 elif event.key == SDLK_ESCAPE:
                     running = False
+                    print(running)
+
+foxx, foxy = 400, 300
+foxrow, foxcol = 1, 1
+foxhealth = 3                 #체력관련사용변수 (frog, eagle에서사용중)
+userinput = 0            
+spawnmob = 0  
+userscore = 0              #점수관련사용변수 (gem에서사용중)
