@@ -2,20 +2,25 @@ import game_framework
 from pico2d import *
 import play_state
 
-image = None
-user_select = 'start_game'
+background_image = None
+ui_image = None
+user_select = None
 
 def enter():
-    global image
+    global background_image
     global ui_image
-    image = load_image('tuk_credit.png')
+    global user_select
+    background_image = load_image('tuk_credit.png')
     ui_image = load_image('ui_large.png')
+    user_select = 'start_game'
 
 def exit():
-    global image
+    global background_image
     global ui_image
-    del image
+    global user_select
+    del background_image
     del ui_image
+    del user_select
 
 def handle_events():
     global user_select
@@ -39,7 +44,7 @@ def handle_events():
 def draw():
     global user_select
     clear_canvas()
-    image.clip_draw(0, 0, 800, 600, 960, 540, 1920, 1080)
+    background_image.clip_draw(0, 0, 800, 600, 960, 540, 1920, 1080)
     if user_select == 'start_game':
         ui_image.clip_draw(144, 32, 48, 16, 930, 300, 480, 160)
         ui_image.clip_draw(288, 32, 48, 16, 930, 130, 480, 160)

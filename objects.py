@@ -165,7 +165,6 @@ class Cherry:
             self.x, self.y = -200, -200
             userscore += 1
             self.effectdraw = 0
-            print(userscore)
 
         if self.effectdraw < 8:
             self.effect.clip_draw((self.effectdraw//2) * 32, 0, 32, 32, self.ex, self.ey, 192, 192)

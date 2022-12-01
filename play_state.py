@@ -61,8 +61,7 @@ def update():
     fox.update()
     delay(0.05)
 
-def draw():
-    clear_canvas()
+def draw_world():
     background.draw()
     under_platform.draw(1)
     over_platform.draw(2)
@@ -73,6 +72,10 @@ def draw():
     frog.draw()
     boss1.draw()
     gem.draw()
+
+def draw():
+    clear_canvas()
+    draw_world()
     update_canvas()
 
 
