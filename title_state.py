@@ -4,23 +4,33 @@ import play_state
 
 background_image = None
 ui_image = None
+fox_image = None
 user_select = None
+frame = None
 
 def enter():
     global background_image
     global ui_image
     global user_select
-    background_image = load_image('tuk_credit.png')
+    global fox_image
+    global frame
+    background_image = load_image('ui_panels.png')
     ui_image = load_image('ui_large.png')
+    fox_image = load_image('fox.png')
     user_select = 'start_game'
+    frame = 0
 
 def exit():
     global background_image
     global ui_image
     global user_select
+    global fox_image
+    global frame
     del background_image
     del ui_image
     del user_select
+    del fox_image
+    del frame
 
 def handle_events():
     global user_select
@@ -44,17 +54,20 @@ def handle_events():
 def draw():
     global user_select
     clear_canvas()
-    background_image.clip_draw(0, 0, 800, 600, 960, 540, 1920, 1080)
+    background_image.clip_draw(0, 32, 32, 32, 960, 540, 2200, 2000)
     if user_select == 'start_game':
         ui_image.clip_draw(144, 32, 48, 16, 930, 300, 480, 160)
         ui_image.clip_draw(288, 32, 48, 16, 930, 130, 480, 160)
     elif user_select == 'exit_game':
         ui_image.clip_draw(96, 32, 48, 16, 930, 300, 480, 160)
         ui_image.clip_draw(336, 32, 48, 16, 930, 130, 480, 160)
+    fox_image.clip_draw(frame * 33, 32, 33, 32, 930, 700, 330, 320)
     update_canvas()
+    delay(0.06)
 
 def update():
-    pass
+    global frame
+    frame = (frame + 1) % 6
 
 def pause():
     pass
