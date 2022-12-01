@@ -10,6 +10,7 @@ from objects import Frog
 from objects import Boss
 import game_framework
 import pause_state
+import ending_state
 
 fox = None
 heart = None
@@ -21,6 +22,7 @@ gem = None
 eagle = None
 frog = None
 boss1 = None
+diecountdown = 20
 running = None
 
 def enter():
@@ -52,6 +54,7 @@ def exit():
     del boss1
 
 def update():
+    global diecountdown
     background.update()
     cherry.update()
     gem.update()
@@ -59,6 +62,10 @@ def update():
     frog.update()
     boss1.update()
     fox.update()
+    if fox.health() == 0:
+        diecountdown -= 1
+        if diecountdown == 0:
+            game_framework.change_state(ending_state)
     delay(0.05)
 
 def draw_world():

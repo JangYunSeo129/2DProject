@@ -1,7 +1,4 @@
-from math import ceil
-from re import S
 from pico2d import *
-import os
 import random
 os.chdir('c:\\Users\\user\\Desktop\\tcu\\2-2\\2DGP\\2DProject')
 
@@ -15,6 +12,12 @@ class Fox:
 
     def update(self):
         self.frame = (self.frame + 1) % 6
+
+    def health(self):
+        if foxhealth == 0:
+            return 0
+        else:
+            return 1
 
     def draw(self):
         global foxrow, foxcol
@@ -107,10 +110,12 @@ class Heart():
             self.image.clip_draw(0, 16, 16, 16, 350, 1000, 240, 240)
         else:
             self.image.clip_draw(16, 16, 16, 16, 350, 1000, 240, 240)
+
         if foxhealth >= 2:
             self.image.clip_draw(0, 16, 16, 16, 220, 1000, 240, 240)
         else:
             self.image.clip_draw(16, 16, 16, 16, 220, 1000, 240, 240)
+
         if foxhealth == 0:
             self.image.clip_draw(16, 16, 16, 16, 90, 1000, 240, 240)
         else:
@@ -150,10 +155,10 @@ class Cherry:
 
     def update(self):
         self.frame = (self.frame + 1) % 7
+        self.spawn += 1
 
     def draw(self):
         global userscore, foxhealth
-        self.spawn += 1
         if self.spawn == 400:
             self.row, self.col = random.randint(1, 4), random.randint(1, 3)
             self.spawn = 0
@@ -240,16 +245,14 @@ class Frog:
 
     def update(self):
         self.frame = (self.frame + 1) % 12
+        self.spawn += 1
+        if self.spawn >= 55:
+            self.x = self.x - 45
 
     def draw(self):
-        global spawnmob, foxhealth
-        if spawnmob == 1:   #등장 조건 바꿔야함
-            self.spawn = 1
-            spawnmob = 0
-        if self.spawn == 1:
-            # if rand 1,2 1뛰기 2안뛰기 FRAME //3도 바꿔줄수있으면 바꾸자
+        global foxhealth
+        if self.spawn >= 55:
             self.image.clip_draw(((self.frame // 3)* 35) + 70, 32, 35, 32, self.x, self.y, 264, 256)
-            self.x = self.x - 30
             if self.x < 0:
                 self.x = 2100
                 self.spawn = 0
@@ -285,15 +288,14 @@ class Eagle:
 
     def update(self):
         self.frame = (self.frame + 1) % 4
+        self.spawn += 1
+        if self.spawn >= 90:
+            self.x = self.x - 60
 
     def draw(self):
-        global spawnmob, foxhealth
-        if spawnmob == 2:   #등장 조건 바꿔야함
-            self.spawn = 1
-            spawnmob = 0
-        if self.spawn == 1:
+        global foxhealth
+        if self.spawn >= 90:
             self.image.clip_draw(self.frame * 40, 0, 40, 41, self.x, self.y, 264, 256)
-            self.x = self.x - 45
             if self.x < 0:
                 self.x = 2100
                 self.spawn = 0
@@ -327,20 +329,19 @@ class Boss:
 
     def update(self):
         self.frame = (self.frame + 1) % 12
-
-    def draw(self):
-        global spawnmob
-        if spawnmob == 3:   #등장 조건 바꿔야함
-            self.spawn = 1
-            spawnmob = 0
-        if self.spawn == 1:
-            self.image.clip_composite_draw((self.frame//2 * 36), 0, 36, 32, 0, 'h', self.x, self.y, 720, 640)
+        if self.spawn < 500:
+            self.spawn += 1
+        else:
+            self.spawn = 500
             if self.x > 1550:
                 self.x = self.x - 25
+
+    def draw(self):
+        if self.spawn == 500:
+            self.image.clip_composite_draw((self.frame//2 * 36), 0, 36, 32, 0, 'h', self.x, self.y, 720, 640)
 
 foxx, foxy = 400, 300
 foxrow, foxcol = 1, 1
 foxhealth = 3                 #체력관련사용변수 (frog, eagle에서사용중)
 userinput = 0            
-spawnmob = 0  
 userscore = 0              #점수관련사용변수 (gem에서사용중)

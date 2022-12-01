@@ -68,6 +68,7 @@ def handle_events():
                 if user_select == 'resume_game':
                     game_framework.pop_state()
                 elif user_select == 'home':
+                    game_framework.pop_state()
                     game_framework.change_state(title_state)
                 elif user_select == 'exit_game':
                     game_framework.quit()
