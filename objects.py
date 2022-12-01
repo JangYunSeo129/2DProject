@@ -11,7 +11,7 @@ class Fox:
         self.drawaction = 0
         self.frame = 0
         self.x, self.y = 0, 0
-        self.image = load_image('player_sheet.png')
+        self.image = load_image('fox.png')
 
     def update(self):
         self.frame = (self.frame + 1) % 6
@@ -84,7 +84,19 @@ class Fox:
                         self.drawaction = 0
                         userinput = 0
                         self.frame = 0
-
+        
+    def handle_event(self, event):
+        global userinput
+        if userinput == 0:
+            if event.type == SDL_KEYDOWN:
+                if event.key == SDLK_RIGHT:
+                    userinput = 1
+                elif event.key == SDLK_LEFT:
+                    userinput = 2
+                elif event.key == SDLK_UP:
+                    userinput = 3
+                elif event.key == SDLK_DOWN:
+                    userinput = 4
 
 class Heart():
     def __init__(self):
@@ -117,7 +129,7 @@ class Platform:
 class Background:
     def __init__(self):
         self.frame = 0
-        self.image = load_image('backplus.png')
+        self.image = load_image('background.png')
 
     def update(self):
         if foxhealth > 0:
@@ -132,7 +144,7 @@ class Cherry:
         self.row, self.col = 0, 0
         self.frame = 0
         self.spawn = 0
-        self.image = load_image('item1_sheet.png')
+        self.image = load_image('cherry.png')
         self.effect = load_image('item_effect.png')
         self.effectdraw, self.ex, self.ey = 0, 0, 0
 
@@ -181,7 +193,7 @@ class Gem:
         self.x, self.y = -200, -200
         self.row, self.col = random.randint(1, 4), random.randint(1, 3)
         self.frame = 0
-        self.image = load_image('item2_sheet.png')
+        self.image = load_image('gem.png')
         self.effect = load_image('item_effect.png')
         self.effectdraw, self.ex, self.ey = 0, 0, 0
 
@@ -223,7 +235,7 @@ class Frog:
         self.x, self.y = 2100, 262 
         self.spawn = 0
         self.frame = 0
-        self.image = load_image('enemy1_sheet.png')
+        self.image = load_image('frogandboss.png')
         self.effect = load_image('enemy_effect.png')
         self.effectdraw, self.ex, self.ey = 0, 0, 0
 
@@ -268,7 +280,7 @@ class Eagle:
         self.x, self.y = 2100, 812
         self.spawn = 0
         self.frame = 0
-        self.image = load_image('enemy2_sheet.png')
+        self.image = load_image('eagle.png')
         self.effect = load_image('enemy_effect.png')
         self.effectdraw, self.ex, self.ey = 0, 0, 0
 
@@ -312,7 +324,7 @@ class Boss:
         self.spawn = 0
         self.frame = 0
         self.x, self.y = 2400, 330
-        self.image = load_image('enemy1_sheet.png')
+        self.image = load_image('frogandboss.png')
 
     def update(self):
         self.frame = (self.frame + 1) % 12
@@ -326,35 +338,6 @@ class Boss:
             self.image.clip_composite_draw((self.frame//2 * 36), 0, 36, 32, 0, 'h', self.x, self.y, 720, 640)
             if self.x > 1550:
                 self.x = self.x - 25
-            
-
-def handle_events():
-    global running, userinput, spawnmob
-    events = get_events()
-    for event in events:
-        if userinput == 0:
-            if event.type == SDL_QUIT:
-                running = False  
-            elif event.type == SDL_KEYDOWN:
-                if event.key == SDLK_RIGHT:
-                    userinput = 1
-                elif event.key == SDLK_LEFT:
-                    userinput = 2
-                elif event.key == SDLK_UP:
-                    userinput = 3
-                elif event.key == SDLK_DOWN:
-                    userinput = 4
-                elif event.key == SDLK_q:
-                    spawnmob = 1
-                elif event.key == SDLK_w:
-                    spawnmob = 2
-                elif event.key == SDLK_e:
-                    spawnmob = 3
-                elif event.key == SDLK_r:
-                    spawnmob = 4
-                elif event.key == SDLK_ESCAPE:
-                    running = False
-                    print(running)
 
 foxx, foxy = 400, 300
 foxrow, foxcol = 1, 1

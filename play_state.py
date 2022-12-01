@@ -1,5 +1,15 @@
 from pico2d import *
-from objects import *
+from objects import Fox
+from objects import Heart
+from objects import Background
+from objects import Platform
+from objects import Cherry
+from objects import Gem
+from objects import Eagle
+from objects import Frog
+from objects import Boss
+import game_framework
+import pause_state
 
 fox = None
 heart = None
@@ -49,6 +59,7 @@ def update():
     frog.update()
     boss1.update()
     fox.update()
+    delay(0.05)
 
 def draw():
     clear_canvas()
@@ -63,3 +74,22 @@ def draw():
     boss1.draw()
     gem.draw()
     update_canvas()
+
+
+def handle_events():
+    events = get_events()
+    for event in events:
+        if event.type == SDL_QUIT:
+            game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            game_framework.push_state(pause_state)
+        else:
+            fox.handle_event(event)
+        delay(0.01)
+
+def pause():
+    pass
+
+def resume():
+    pass
+        
