@@ -7,6 +7,7 @@ from objects import Cherry
 from objects import Gem
 from objects import Eagle
 from objects import Frog
+from objects import Rock
 from objects import Boss
 import game_framework
 import pause_state
@@ -21,12 +22,14 @@ cherry = None
 gem = None
 eagle = None
 frog = None
+rock = None
 boss1 = None
 diecountdown = 20
+bgm = None
 running = None
 
 def enter():
-    global fox, heart, background, under_platform, over_platform, cherry, gem, eagle, frog, boss1, running
+    global fox, heart, background, under_platform, over_platform, cherry, gem, eagle, frog, rock, boss1, running, bgm
     
     fox = Fox()
     heart = Heart()
@@ -37,11 +40,15 @@ def enter():
     gem = Gem()
     eagle = Eagle()
     frog = Frog()
+    rock = Rock()
     boss1 = Boss()
+    bgm = load_music('main.mp3')
+    bgm.set_volume(32)
+    bgm.repeat_play()
     running = True
 
 def exit():
-    global fox, heart, background, under_platform, over_platform, cherry, gem, eagle, frog, boss1
+    global fox, heart, background, under_platform, over_platform, cherry, gem, eagle, frog, rock, boss1 , bgm
     del fox
     del heart
     del background
@@ -51,7 +58,9 @@ def exit():
     del gem
     del eagle
     del frog
+    del rock
     del boss1
+    del bgm
 
 def update():
     global diecountdown
@@ -60,6 +69,7 @@ def update():
     gem.update()
     eagle.update()
     frog.update()
+    rock.update()
     boss1.update()
     fox.update()
     if fox.health() == 0:
@@ -77,6 +87,7 @@ def draw_world():
     cherry.draw()
     eagle.draw()
     frog.draw()
+    rock.draw()
     boss1.draw()
     gem.draw()
 

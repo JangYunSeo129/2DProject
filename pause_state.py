@@ -7,23 +7,35 @@ import play_state
 background_image = None
 ui_image = None
 user_select = None
+choose_bgm = None
+select_bgm = None
 
 def enter():
     global background_image
     global ui_image
     global user_select
+    global choose_bgm
+    global select_bgm
     background_image = load_image('ui_panels.png')
     ui_image = load_image('ui_small.png')
     user_select = 'resume_game'
+    choose_bgm = load_music('choose.mp3')
+    select_bgm = load_music('select.mp3')
+    choose_bgm.set_volume(32)
+    select_bgm.set_volume(32)
 
 
 def exit():
     global background_image
     global ui_image
     global user_select
+    global choose_bgm
+    global select_bgm
     del background_image
     del ui_image
     del user_select
+    del choose_bgm
+    del select_bgm
 
 def draw():
     global user_select
@@ -55,20 +67,22 @@ def handle_events():
             if event.key == SDLK_ESCAPE:
                 game_framework.pop_state()
             elif event.key == SDLK_LEFT:
+                choose_bgm.play()
                 if user_select == 'exit_game':
                     user_select = 'home'
                 elif user_select == 'home':
                     user_select = 'resume_game'
             elif event.key == SDLK_RIGHT:
+                choose_bgm.play()
                 if user_select == 'resume_game':
                     user_select = 'home'
                 elif user_select == 'home':
                     user_select = 'exit_game'
             elif event.key == SDLK_SPACE:
+                select_bgm.play()
                 if user_select == 'resume_game':
                     game_framework.pop_state()
                 elif user_select == 'home':
-                    game_framework.pop_state()
                     game_framework.change_state(title_state)
                 elif user_select == 'exit_game':
                     game_framework.quit()

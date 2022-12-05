@@ -7,6 +7,9 @@ ui_image = None
 fox_image = None
 user_select = None
 frame = None
+bgm = None
+choose_bgm = None
+select_bgm = None
 
 def enter():
     global background_image
@@ -14,11 +17,21 @@ def enter():
     global user_select
     global fox_image
     global frame
+    global bgm
+    global choose_bgm
+    global select_bgm
     background_image = load_image('ui_panels.png')
     ui_image = load_image('ui_large.png')
     fox_image = load_image('fox.png')
     user_select = 'start_game'
     frame = 0
+    bgm = load_music('title.mp3')
+    bgm.set_volume(32)
+    bgm.repeat_play()
+    choose_bgm = load_music('choose.mp3')
+    select_bgm = load_music('select.mp3')
+    choose_bgm.set_volume(32)
+    select_bgm.set_volume(32)
 
 def exit():
     global background_image
@@ -26,11 +39,17 @@ def exit():
     global user_select
     global fox_image
     global frame
+    global bgm
+    global choose_bgm
+    global select_bgm
     del background_image
     del ui_image
     del user_select
     del fox_image
     del frame
+    del bgm
+    del choose_bgm
+    del select_bgm
 
 def handle_events():
     global user_select
@@ -42,10 +61,13 @@ def handle_events():
             if event.key == SDLK_ESCAPE:
                 game_framework.quit()
             elif event.key == SDLK_DOWN:
+                choose_bgm.play()
                 user_select = 'exit_game'
             elif event.key == SDLK_UP:
+                choose_bgm.play()
                 user_select = 'start_game'
             elif event.key == SDLK_SPACE:
+                select_bgm.play()
                 if user_select == 'start_game':
                     game_framework.change_state(play_state)
                 elif user_select == 'exit_game':

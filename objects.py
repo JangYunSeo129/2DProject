@@ -151,6 +151,8 @@ class Cherry:
         self.spawn = 0
         self.image = load_image('cherry.png')
         self.effect = load_image('item_effect.png')
+        self.bgm = load_music('heal.mp3')
+        self.bgm.set_volume(32)
         self.effectdraw, self.ex, self.ey = 0, 0, 0
 
     def update(self):
@@ -163,6 +165,7 @@ class Cherry:
             self.row, self.col = random.randint(1, 4), random.randint(1, 3)
             self.spawn = 0
         if foxrow == self.row and foxcol == self.col:
+            self.bgm.play()
             if foxhealth < 3:
                 foxhealth += 1
             self.ex, self.ey = self.x, self.y
@@ -199,6 +202,8 @@ class Gem:
         self.frame = 0
         self.image = load_image('gem.png')
         self.effect = load_image('item_effect.png')
+        self.bgm = load_music('gem.mp3')
+        self.bgm.set_volume(32)
         self.effectdraw, self.ex, self.ey = 0, 0, 0
 
     def update(self):
@@ -207,6 +212,7 @@ class Gem:
     def draw(self):
         global userscore
         if foxrow == self.row and foxcol == self.col:
+            self.bgm.play()
             self.ex, self.ey = self.x, self.y
             self.row, self.col = random.randint(1, 4), random.randint(1, 3)
             userscore += 1
@@ -241,6 +247,8 @@ class Frog:
         self.frame = 0
         self.image = load_image('frogandboss.png')
         self.effect = load_image('enemy_effect.png')
+        self.bgm = load_music('hit.mp3')
+        self.bgm.set_volume(32)
         self.effectdraw, self.ex, self.ey = 0, 0, 0
 
     def update(self):
@@ -262,12 +270,63 @@ class Frog:
         else:
             if foxx - self.x < 0:
                 if self.x - foxx < 132:
+                    self.bgm.play()
                     foxhealth -= 1
                     self.ex, self.ey = self.x, self.y
                     self.effectdraw = 0
                     self.x = 2100
                     self.spawn = 0
             elif foxx - self.x < 132:
+                self.bgm.play()
+                foxhealth -= 1
+                self.ex, self.ey = self.x, self.y
+                self.effectdraw = 0
+                self.x = 2100
+                self.spawn = 0
+        if self.effectdraw < 12:
+            self.effect.clip_draw((self.effectdraw//2) * 40, 0, 40, 41, self.ex, self.ey, 192, 192)
+            self.effectdraw += 1
+
+class Rock:
+    def __init__(self):
+        self.x, self.y = 2100, 530
+        self.spawn = 0
+        self.frame = 0
+        self.image = load_image('ui_heart.png')
+        self.effect = load_image('enemy_effect.png')
+        self.bgm = load_music('hit.mp3')
+        self.bgm.set_volume(32)
+        self.effectdraw, self.ex, self.ey = 0, 0, 0
+
+    def update(self):
+        self.spawn += 1
+        self.frame = (self.frame + 1) % 6
+        if self.spawn >= 755:
+            self.x = self.x - 50
+
+    def draw(self):
+        global foxhealth
+        if self.spawn >= 755:
+            self.image.clip_draw((self.frame // 3) * 16, 0, 16, 16, self.x, self.y, 192, 192)
+            if self.x < 0:
+                self.x = 2100
+                self.spawn = 700
+
+        if foxy > self.y + 132:
+            pass
+        elif foxy < self.y - 132:
+            pass
+        else:
+            if foxx - self.x < 0:
+                if self.x - foxx < 132:
+                    self.bgm.play()
+                    foxhealth -= 1
+                    self.ex, self.ey = self.x, self.y
+                    self.effectdraw = 0
+                    self.x = 2100
+                    self.spawn = 0
+            elif foxx - self.x < 132:
+                self.bgm.play()
                 foxhealth -= 1
                 self.ex, self.ey = self.x, self.y
                 self.effectdraw = 0
@@ -284,6 +343,8 @@ class Eagle:
         self.frame = 0
         self.image = load_image('eagle.png')
         self.effect = load_image('enemy_effect.png')
+        self.bgm = load_music('hit.mp3')
+        self.bgm.set_volume(32)
         self.effectdraw, self.ex, self.ey = 0, 0, 0
 
     def update(self):
@@ -305,12 +366,14 @@ class Eagle:
         else:
             if foxx - self.x < 0:
                 if self.x - foxx < 132:
+                    self.bgm.play()
                     foxhealth -= 1
                     self.ex, self.ey = self.x, self.y
                     self.effectdraw = 0
                     self.x = 2100
                     self.spawn = 0
             elif foxx - self.x < 132:
+                self.bgm.play()
                 foxhealth -= 1
                 self.ex, self.ey = self.x, self.y
                 self.effectdraw = 0
@@ -329,15 +392,14 @@ class Boss:
 
     def update(self):
         self.frame = (self.frame + 1) % 12
-        if self.spawn < 500:
+        if self.spawn < 700:
             self.spawn += 1
         else:
-            self.spawn = 500
             if self.x > 1550:
                 self.x = self.x - 25
 
     def draw(self):
-        if self.spawn == 500:
+        if self.spawn == 700:
             self.image.clip_composite_draw((self.frame//2 * 36), 0, 36, 32, 0, 'h', self.x, self.y, 720, 640)
 
 foxx, foxy = 400, 300
