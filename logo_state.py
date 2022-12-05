@@ -1,7 +1,6 @@
 from pico2d import *
 import game_framework
 import title_state
-os.chdir('c:\\Users\\user\\Desktop\\tcu\\2-2\\2DGP\\2DProject')
 
 image = None
 logo_time = 0.0

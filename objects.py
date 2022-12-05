@@ -1,7 +1,5 @@
 from pico2d import *
 import random
-os.chdir('c:\\Users\\user\\Desktop\\tcu\\2-2\\2DGP\\2DProject')
-
 
 class Fox:
     def __init__(self):
